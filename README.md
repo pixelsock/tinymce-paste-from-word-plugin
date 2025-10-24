@@ -1,18 +1,32 @@
 # TinyMCE Paste from Word Plugin
 
-This plugin adds the open-source [Paste from Word](https://www.tiny.cloud/docs/plugins/opensource/paste/) functionality from the 5.x branch of TinyMCE as a plugin for the 6.x, 7.x, and 8.x branches. The goal of this project is not to replace the premium [PowerPaste plugin](https://www.tiny.cloud/tinymce/features/powerpaste/), but to allow users to have paste-from-word support with the latest versions of TinyMCE.
+> **Note:** This is a continuation of the [original archived project](https://github.com/pangaeatech/tinymce-paste-from-word-plugin). I've updated and maintained this plugin to support the latest versions of TinyMCE (6.x, 7.x, and 8.x) with enhanced features including image support and custom event handling.
 
-## New Features
+A free, open-source plugin that provides paste-from-Word functionality for TinyMCE 6+. This plugin cleans up messy HTML from Microsoft Word documents, preserves formatting, and now supports embedded images.
 
-* **TinyMCE 8.x Compatibility:** Now supports TinyMCE 6.x, 7.x, and 8.x
+## Why Use This Plugin?
+
+- 🆓 **Free Alternative** to TinyMCE's premium PowerPaste plugin
+- 📝 **Clean Paste** - Automatically cleans up Word's messy HTML
+- 🖼️ **Image Support** - Paste images from Word documents with Base64 encoding
+- 🎨 **Custom Events** - Hook into paste events for custom formatting
+- 🚀 **Modern** - Works with TinyMCE 6.x, 7.x, and 8.x
+- ✅ **Tested** - Comprehensive test coverage and actively maintained
+
+## Features
+
+* **TinyMCE 8.x Compatibility:** Full support for TinyMCE 6.x, 7.x, and 8.x
 * **Image Support:** Paste images from Word documents using `paste_data_images`
 * **Custom Events:** `PasteFromWordPreProcess` and `PasteFromWordPostProcess` events for custom formatting
 * **Base64 Image Handling:** Automatic Base64 encoding with `images_upload_handler`
+* **Smart List Conversion:** Converts Word's fake lists to proper HTML lists
+* **Style Preservation:** Keeps important formatting while removing Word junk
 
-### Comparison with PowerPaste
+## Comparison with PowerPaste
 
 | Feature                           | This Plugin | PowerPaste |
 | :-------------------------------- | :---------: | :--------: |
+| **Cost**                          |    Free     |    Paid    |
 | Automatically cleans up content   |     ✔      |     ✔     |
 | Supports embedded images          |     ✔      |     ✔     |
 | Paste from Microsoft Word         |     ✔      |     ✔     |
@@ -22,12 +36,17 @@ This plugin adds the open-source [Paste from Word](https://www.tiny.cloud/docs/p
 | Paste from Google Docs            |     ✔      |     ✔     |
 | Paste from Google Sheets          |      -      |     -      |
 | Custom paste events               |     ✔      |     -      |
+| Open source                       |     ✔      |     -      |
 
-## Usage
+## Quick Start
 
-### Option 1: CDN Hosted
+### Installation
 
-1. Tell your TinyMCE instance where to load the plugin from and how to configure it:
+Choose one of the following installation methods:
+
+#### Option 1: CDN (Easiest)
+
+Load the plugin directly from unpkg CDN:
 
 ```js
 tinymce.PluginManager.load(
@@ -51,11 +70,24 @@ tinymce.init({
 });
 ```
 
-### Option 2: Self-Hosted
+#### Option 2: npm/yarn
 
-1. Create a new folder `paste_from_word` inside of the existing TinyMCE `plugins` folder.
-2. Download the file `https://unpkg.com/@pangaeatech/tinymce-paste-from-word-plugin@latest/index.js` and add it to that new folder, renaming it `plugin.min.js`
-3. Configure your TinyMCE instance to use the plugin:
+Install via npm or yarn:
+
+```bash
+npm install @pangaeatech/tinymce-paste-from-word-plugin
+# or
+yarn add @pangaeatech/tinymce-paste-from-word-plugin
+```
+
+Then load it in your project (see React example below).
+
+#### Option 3: Self-Hosted
+
+1. Create a new folder `paste_from_word` inside of the existing TinyMCE `plugins` folder
+2. Download [`index.js`](https://unpkg.com/@pangaeatech/tinymce-paste-from-word-plugin@latest/index.js) from unpkg
+3. Save it to the new folder as `plugin.min.js`
+4. Configure your TinyMCE instance to use the plugin:
 
 ```js
 tinymce.init({
@@ -75,20 +107,17 @@ tinymce.init({
 });
 ```
 
-### Option 3: React (etc.)
+### Usage with React
 
-The following instructions are for a project using ReactJS and NPM, but you can
-easily modify these for any other NodeJS-based project.
+For React projects (or other Node.js frameworks):
 
-1. Add the TinyMCE and TinyMCE Paste from Word Plugin projects to your package management:
+1. Install the required packages:
 
 ```bash
-npx create-react-app tinymce-react-demo
-cd tinymce-react-demo
-npm install --save @tinymce/tinymce-react @pangaeatech/tinymce-paste-from-word-lib
+npm install @tinymce/tinymce-react @pangaeatech/tinymce-paste-from-word-lib
 ```
 
-2. Using a text editor, open ./src/App.js and replace the contents with:
+2. Use in your React component:
 
 ```jsx
 import React from "react";
@@ -251,3 +280,41 @@ This plugin is a preprocessor which converts paste content from MS Word into Web
 Type: Boolean
 
 Default Value: `true`
+
+## Project History & Maintenance
+
+This project is a continuation and enhancement of the [original TinyMCE Paste from Word plugin](https://github.com/pangaeatech/tinymce-paste-from-word-plugin) by Pangaea Information Technologies, Ltd., which was archived when TinyMCE 6.x support ended in October 2024.
+
+### What's New in This Fork
+
+I've revived and updated this plugin with:
+
+- ✅ **TinyMCE 8.x Support** - Full compatibility with TinyMCE 6.x, 7.x, and 8.x
+- ✅ **Image Support** - Paste images from Word with Base64 encoding
+- ✅ **Custom Events** - New `PasteFromWordPreProcess` and `PasteFromWordPostProcess` events
+- ✅ **Active Maintenance** - Regular updates and bug fixes
+- ✅ **Modern Tooling** - Updated dependencies and build process
+
+### Contributing
+
+Contributions are welcome! Please feel free to submit issues and pull requests.
+
+### License
+
+This project is licensed under the LGPL-2.1 License, maintaining the same license as the original project.
+
+### Credits
+
+- Original plugin by [Pangaea Information Technologies, Ltd.](https://github.com/pangaeatech)
+- Based on TinyMCE 5.x paste-from-word functionality
+- Maintained and updated by [@pixelsock](https://github.com/pixelsock)
+
+### Support
+
+- 🐛 [Report Issues](https://github.com/pixelsock/tinymce-paste-from-word-plugin/issues)
+- 💬 [Discussions](https://github.com/pixelsock/tinymce-paste-from-word-plugin/discussions)
+- 📖 [Documentation](https://github.com/pixelsock/tinymce-paste-from-word-plugin)
+
+---
+
+**Made with ❤️ for the TinyMCE community**
