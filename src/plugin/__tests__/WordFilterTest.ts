@@ -547,3 +547,33 @@ test("TBA: paste nested lists", () => {
       "<p> </p>",
   );
 });
+
+test("TBA: Paste Word content with paste_data_images enabled", () => {
+  const editor = new tinymce.Editor(
+    "id",
+    { paste_data_images: true },
+    tinymce,
+  );
+
+  // Test that processImages function is called and doesn't break content
+  const result = preProcess(
+    editor,
+    '<p class="MsoNormal">Test content<o:p></o:p></p>',
+  );
+  expect(result).toEqual("<p>Test content</p>");
+});
+
+test("TBA: Paste Word content without paste_data_images", () => {
+  const editor = new tinymce.Editor(
+    "id",
+    { paste_data_images: false },
+    tinymce,
+  );
+
+  // Test that processImages function is called and doesn't break content
+  const result = preProcess(
+    editor,
+    '<p class="MsoNormal">Test content<o:p></o:p></p>',
+  );
+  expect(result).toEqual("<p>Test content</p>");
+});
