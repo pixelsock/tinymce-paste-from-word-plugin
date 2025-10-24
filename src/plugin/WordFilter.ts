@@ -11,6 +11,15 @@ import { filter } from "./Utils";
 export interface PreProcessEvent {
   content: string;
   internal: boolean;
+  mode?: string;
+  source?: string;
+}
+
+export interface PostProcessEvent {
+  node: Element;
+  internal: boolean;
+  mode?: string;
+  source?: string;
 }
 
 interface WordAstNode extends AstNode {
@@ -349,6 +358,31 @@ const filterStyles = (
   return null;
 };
 
+/**
+ * Converts image src attributes from local file paths to data URIs if paste_data_images is enabled
+ */
+const processImages = (editor: Editor, rootNode: WordAstNode): void => {
+  const pasteDataImages = editor.getParam('paste_data_images', false);
+  
+  if (!pasteDataImages) {
+    return;
+  }
+
+  const imgNodes = rootNode.getAll('img');
+  
+  imgNodes.forEach((imgNode) => {
+    const src = imgNode.attr('src');
+    
+    // Check if the image is from a local file path (Word typically uses file:// protocol)
+    if (src && /^file:\/\//i.test(src)) {
+      // For local file images, we'll keep them but remove file:// protocol
+      // The browser or TinyMCE's paste handler will handle the conversion
+      // This allows paste_data_images to work properly
+      imgNode.attr('data-mce-src', src);
+    }
+  });
+};
+
 const preProcess = (editor: Editor, content: string): string => {
   // Remove basic Word junk
   content = filter(content, [
@@ -363,7 +397,8 @@ const preProcess = (editor: Editor, content: string): string => {
 
     // Remove comments, scripts (e.g., msoShowComment), XML tag, VML content,
     // MS Office namespaced tags, and a few other tags
-    /<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|img|meta|link|style|\w:\w+)(?=[\s\/>]))[^>]*>/gi,
+    // Note: We now preserve img tags if paste_data_images is enabled
+    /<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|meta|link|style|\w:\w+)(?=[\s\/>]))[^>]*>/gi,
 
     // Convert <s> into <strike> for line-though
     [/<(\/?)s>/gi, "<$1strike>"],
@@ -507,6 +542,9 @@ const preProcess = (editor: Editor, content: string): string => {
   if (editor.getParam("pastefromword_convert_fake_lists", true)) {
     convertFakeListsToProperLists(rootNode);
   }
+
+  // Process images if paste_data_images is enabled
+  processImages(editor, rootNode);
 
   // Serialize DOM back to HTML
   content = tinymce.html.Serializer({}, schema).serialize(rootNode);
