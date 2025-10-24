@@ -5,7 +5,7 @@
     <title>TinyMCE Paste From Word Plugin Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.4/tinymce.min.js"
+      src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/8.2.0/tinymce.min.js"
       referrerpolicy="origin"
     ></script>
 
@@ -14,9 +14,36 @@
 
       tinymce.init({
         selector: "#editor",
-        plugins: "paste_from_word",
+        plugins: "paste_from_word image",
+        toolbar: "undo redo | bold italic | alignleft aligncenter alignright | image",
         paste_webkit_styles: "all",
         paste_remove_styles_if_webkit: false,
+        paste_data_images: true, // Allow local images to be pasted as Base64
+        images_upload_handler: function(blobInfo, success, failure) {
+          // Convert images to Base64 for demonstration
+          const reader = new FileReader();
+          reader.onload = function() {
+            success(reader.result);
+          };
+          reader.onerror = function() {
+            failure('Image upload failed');
+          };
+          reader.readAsDataURL(blobInfo.blob());
+        },
+        setup: function(editor) {
+          // Listen for custom events fired by the plugin
+          editor.on('PasteFromWordPreProcess', function(e) {
+            console.log('PasteFromWordPreProcess:', e);
+            // You can modify the content before it's processed
+            // e.content = e.content.replace(/something/, 'something else');
+          });
+          
+          editor.on('PasteFromWordPostProcess', function(e) {
+            console.log('PasteFromWordPostProcess:', e);
+            // You can modify the DOM node after it's processed
+            // e.node.setAttribute('data-processed', 'true');
+          });
+        }
       });
     </script>
     <style>
@@ -24,17 +51,59 @@
         margin: 4rem auto;
         padding: 0 2rem;
         background-color: #f9f9fb;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       }
 
       main {
         width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .info {
+        background-color: #e7f3ff;
+        border: 1px solid #b3d9ff;
+        border-radius: 4px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .info h2 {
+        margin-top: 0;
+        color: #0066cc;
+      }
+
+      .info ul {
+        margin-bottom: 0;
+      }
+
+      .info code {
+        background-color: #f0f0f0;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
       }
     </style>
   </head>
   <body>
     <main>
       <h1 style="text-align: center">TinyMCE Paste From Word Plugin Demo</h1>
-      <textarea id="editor"> </textarea>
+      
+      <div class="info">
+        <h2>New Features</h2>
+        <ul>
+          <li><strong>TinyMCE 8.x Support:</strong> This plugin now works with TinyMCE 6.x, 7.x, and 8.x</li>
+          <li><strong>Image Support:</strong> Paste images from Word documents with <code>paste_data_images: true</code></li>
+          <li><strong>Custom Events:</strong> Listen to <code>PasteFromWordPreProcess</code> and <code>PasteFromWordPostProcess</code> events</li>
+          <li><strong>Base64 Images:</strong> Images are automatically converted to Base64 with the <code>images_upload_handler</code></li>
+        </ul>
+        <p><strong>Try it:</strong> Open a Word document, copy some content with images, and paste it here. Check the browser console to see the custom events being fired!</p>
+      </div>
+      
+      <textarea id="editor">
+        <p>Try pasting content from Microsoft Word here.</p>
+        <p>The plugin will automatically clean up Word's HTML and preserve your formatting.</p>
+      </textarea>
     </main>
   </body>
 </html>
