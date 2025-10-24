@@ -51,7 +51,7 @@ Load the plugin directly from unpkg CDN:
 ```js
 tinymce.PluginManager.load(
   "paste_from_word",
-  "https://unpkg.com/@pangaeatech/tinymce-paste-from-word-plugin@latest/index.js",
+  "https://unpkg.com/@pixelsock/tinymce-paste-from-word-plugin@latest/index.js",
 );
 tinymce.init({
   selector: "textarea", // change this value according to your HTML
@@ -75,9 +75,9 @@ tinymce.init({
 Install via npm or yarn:
 
 ```bash
-npm install @pangaeatech/tinymce-paste-from-word-plugin
+npm install @pixelsock/tinymce-paste-from-word-plugin
 # or
-yarn add @pangaeatech/tinymce-paste-from-word-plugin
+yarn add @pixelsock/tinymce-paste-from-word-plugin
 ```
 
 Then load it in your project (see React example below).
@@ -85,7 +85,7 @@ Then load it in your project (see React example below).
 #### Option 3: Self-Hosted
 
 1. Create a new folder `paste_from_word` inside of the existing TinyMCE `plugins` folder
-2. Download [`index.js`](https://unpkg.com/@pangaeatech/tinymce-paste-from-word-plugin@latest/index.js) from unpkg
+2. Download [`index.js`](https://unpkg.com/@pixelsock/tinymce-paste-from-word-plugin@latest/index.js) from unpkg
 3. Save it to the new folder as `plugin.min.js`
 4. Configure your TinyMCE instance to use the plugin:
 
@@ -114,7 +114,7 @@ For React projects (or other Node.js frameworks):
 1. Install the required packages:
 
 ```bash
-npm install @tinymce/tinymce-react @pangaeatech/tinymce-paste-from-word-lib
+npm install @tinymce/tinymce-react @pixelsock/tinymce-paste-from-word-lib
 ```
 
 2. Use in your React component:
@@ -122,7 +122,7 @@ npm install @tinymce/tinymce-react @pangaeatech/tinymce-paste-from-word-lib
 ```jsx
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import PasteFromWord from "@pangaeatech/tinymce-paste-from-word-lib";
+import PasteFromWord from "@pixelsock/tinymce-paste-from-word-lib";
 
 const config = {
   height: 500,

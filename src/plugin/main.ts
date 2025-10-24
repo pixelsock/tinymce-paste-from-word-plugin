@@ -56,7 +56,7 @@ export default (): void => {
     return {
       getMetadata: () => ({
         name: "Paste from Word",
-        url: "https://github.com/pangaeatech/tinymce-paste-from-word-plugin",
+        url: "https://github.com/pixelsock/tinymce-paste-from-word-plugin",
       }),
     };
   });

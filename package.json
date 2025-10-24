@@ -1,14 +1,14 @@
 {
-  "name": "@pangaeatech/tinymce-paste-from-word-plugin",
+  "name": "@pixelsock/tinymce-paste-from-word-plugin",
   "version": "1.0.0",
   "description": "TinyMCE 6.x Plugin to add support for pasting from Microsoft Word documents",
   "author": "Pangaea Information Technologies, Ltd.",
   "license": "LGPL-2.1",
   "main": "index.js",
-  "homepage": "https://pangaeatech.github.io/tinymce-paste-from-word-plugin/",
+  "homepage": "https://pixelsock.github.io/tinymce-paste-from-word-plugin/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pangaeatech/tinymce-paste-from-word-plugin"
+    "url": "https://github.com/pixelsock/tinymce-paste-from-word-plugin"
   },
   "keywords": [
     "tinymce",
@@ -18,7 +18,7 @@
     "plugin"
   ],
   "bugs": {
-    "url": "https://github.com/pangaeatech/tinymce-paste-from-word-plugin/issues"
+    "url": "https://github.com/pixelsock/tinymce-paste-from-word-plugin/issues"
   },
   "engines": {
     "node": ">=16.0.0",
