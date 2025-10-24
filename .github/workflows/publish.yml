@@ -46,7 +46,7 @@ jobs:
           cp package.json README.md LICENSE lib/
 
       - run: |
-          sed -i 's/@pangaeatech\/tinymce-paste-from-word-plugin/@pangaeatech\/tinymce-paste-from-word-lib/' lib/package.json
+          sed -i 's/@pixelsock\/tinymce-paste-from-word-plugin/@pixelsock\/tinymce-paste-from-word-lib/' lib/package.json
 
       - uses: JS-DevTools/npm-publish@v3
         with:
